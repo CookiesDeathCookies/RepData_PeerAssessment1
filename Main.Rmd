@@ -31,8 +31,19 @@ with useful information.
 info_grouped_by_time <- group_by(info, interval)
 info_by_time <- summarise(info_grouped_by_time, 
       average_steps = mean(steps, na.rm = TRUE))
+```
+We've accomplished that! Let's now create a plot with ggplot2 package, so our
+plot will be aesthetical and informative.
 
+So we need to load ggplot2 package.
+```{r}
+library(ggplot2)
 ```
 
+Let's start the analysis.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+head(info_by_time)
+time_plot <- ggplot(info_by_time, aes(interval, average_steps))
+time_plot + geom_line()
+```
