@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+output: html_document
+---
+Firstly we should load dplyr package, it'll help us to manage datasets in more
+convenient way.
+```{r}
+library(dplyr)
+```
+
+Let's read our table.
+```{r}
+info <- tbl_df(read.csv("activity.csv"))
+```
+
+Ok. To retrieve useful information, we should group our dataframe
+by date and create new dataset with total amount of steps each day, average
+amount of steps and median.
+```{r}
+info_grouped_by_day <- group_by(info, date)
+info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps),
+      average_steps = mean(steps, na.rm = TRUE, median_steps = median(steps)))
+
+hist(info_by_day$total_steps)
+```
+We've done great work! Let's continue!
+
+So now it'll be good to group main dataframe by time, and create new dataframe
+with useful information.
+```{r}
+info_grouped_by_time <- group_by(info, interval)
+info_by_time <- summarise(info_grouped_by_time, 
+      average_steps = mean(steps, na.rm = TRUE))
+
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
