@@ -28,7 +28,7 @@ info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps))
 
 Fine. Let's see what we have.
 
-```{r}
+```{r fig.path = "figures/"} 
 hist(info_by_day$total_steps, breaks = 10)
 ```
 
@@ -70,7 +70,7 @@ plot will be aesthetical and informative.
 
 Let's plot a dependence between interval and average amount of steps taken in
 it. That's the average daily activity pattern.
-```{r}
+```{r fig.path = "figures/"}
 time_plot <- ggplot(info_by_time, aes(interval, average_steps))
 time_plot + geom_line()
 ```
@@ -123,7 +123,7 @@ head(info)
 
 Now let's see what've changed. Let's repeat what we've done in the beginning
 (create histogram with total amount of steps each day).
-```{r}
+```{r fig.path = "figures/"}
 info_grouped_by_day <- group_by(info, date)
 info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps),
       average_steps = mean(steps, na.rm = TRUE, median_steps = median(steps)))
@@ -175,7 +175,7 @@ head(info_by_day_and_time)
 
 Now let's plot a dependence between interval and average number of steps for
 weekdays and weekends.
-```{r}
+```{r fig.path = "figures/"}
 weektime_plot <- ggplot(info_by_day_and_time, aes(interval, average_steps))
 weektime_plot + geom_line() + facet_grid(type_of_day ~ .)
 ```

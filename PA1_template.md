@@ -51,7 +51,7 @@ Fine. Let's see what we have.
 hist(info_by_day$total_steps, breaks = 10)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](figures/unnamed-chunk-3-1.png)<!-- -->
 
 Let's go on. We need to calculate mean and median for amount of steps taken
 each day.
@@ -126,7 +126,7 @@ time_plot <- ggplot(info_by_time, aes(interval, average_steps))
 time_plot + geom_line()
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](figures/unnamed-chunk-8-1.png)<!-- -->
 
 We see that there is a huge ledge at some point.
 Let's find out the interval when the average amount of steps is maximal.
@@ -214,7 +214,7 @@ info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps),
 hist(info_by_day$total_steps, breaks = 10)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](figures/unnamed-chunk-13-1.png)<!-- -->
 
 We can notice that the number of days when between 10000 and 12500 steps
 has increased greatly. Others've increased too, but on a little.
@@ -417,7 +417,7 @@ weektime_plot <- ggplot(info_by_day_and_time, aes(interval, average_steps))
 weektime_plot + geom_line() + facet_grid(type_of_day ~ .)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](figures/unnamed-chunk-18-1.png)<!-- -->
 
 The only thing that we can notice is that on weekend there are less steps that
 on weekdays, and they're distributed more evenly on weekends.
