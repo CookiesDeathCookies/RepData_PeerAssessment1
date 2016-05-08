@@ -21,7 +21,7 @@ info_grouped_by_day <- group_by(info, date)
 info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps),
       average_steps = mean(steps, na.rm = TRUE, median_steps = median(steps)))
 
-hist(info_by_day$total_steps)
+hist(info_by_day$total_steps, breaks = 10)
 ```
 We've done great work! Let's continue!
 
@@ -46,4 +46,58 @@ Let's start the analysis.
 head(info_by_time)
 time_plot <- ggplot(info_by_time, aes(interval, average_steps))
 time_plot + geom_line()
+```
+
+We see that there is a huge ledge(?) at some point (near ...)
+Let's find out the interval when the average amount of steps is maximal.
+
+```{r}
+info_by_time[which.max(info_by_time$average_steps), ]
+```
+
+Now let's deal with NAs in our dataset.
+Firstly, I consider we should calculate total number of missing values in 
+our dataframe.
+
+```{r}
+sum(is.na(info))
+```
+
+```{r}
+head(info_by_time)
+
+NAs <- which(is.na(info$steps))
+for (i in NAs) {
+      NA_interval <- info[i, "interval"]
+      NA_interval <- NA_interval[[1]]
+      
+      average_steps_for_this_interval <- 
+            filter(info_by_time, interval == NA_interval)$average_steps
+      
+      info[i, "steps"] = average_steps_for_this_interval 
+            + rnorm(1, mean = 1, sd = 0.3)
+}
+
+head(info)
+```
+
+```{r}
+info_grouped_by_day <- group_by(info, date)
+info_by_day <- summarise(info_grouped_by_day, total_steps = sum(steps),
+      average_steps = mean(steps, na.rm = TRUE, median_steps = median(steps)))
+
+hist(info_by_day$total_steps, breaks = 10)
+```
+
+I think that we should search for interesting information in dates of
+observations. Let's divide our dataset into 2 parts. First will include
+weekday and second - weekends.
+
+```{r}
+library(lubridate)
+info <- mutate(info, weekday = wday(as.POSIXlt(date)),
+      type_of_day = factor(ifelse(weekday == 1 | weekday == 7, "Weekend", 
+            "Weekday")), wd = weekdays(as.POSIXlt(date)))
+
+
 ```
